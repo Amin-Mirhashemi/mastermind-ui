@@ -1,6 +1,6 @@
 import { Section, Cell, Image, List, Button } from "@telegram-apps/telegram-ui";
 import type { FC } from "react";
-import { openLink } from "@tma.js/sdk-react";
+import { openTelegramLink } from "@tma.js/sdk-react";
 
 import { Link } from "@/components/Link/Link.tsx";
 import { Page } from "@/components/Page.tsx";
@@ -19,27 +19,10 @@ Think you can beat this?
 Play now: @play_mastermind_bot`;
 
 const handleShare = async () => {
-  // Try Web Share API first (native device share sheet)
-  if (navigator.share && navigator.canShare) {
-    try {
-      const shareData = {
-        title: "🎯 Mastermind Game Result",
-        text: mastermindText,
-        url: "https://t.me/play_mastermind_bot", // Your bot URL
-      };
-
-      if (navigator.canShare(shareData)) {
-        await navigator.share(shareData);
-        return;
-      }
-    } catch (error) {
-      console.log("Web Share API failed, falling back to Telegram sharing");
-    }
-  }
-
-  // Fallback to Telegram sharing
-  const shareUrl = `tg://msg_url?url=${encodeURIComponent(mastermindText)}`;
-  openLink(shareUrl);
+  const shareUrl = `https://t.me/share/url?text=${encodeURIComponent(
+    mastermindText
+  )}`;
+  openTelegramLink(shareUrl);
 };
 
 export const IndexPage: FC = () => {
