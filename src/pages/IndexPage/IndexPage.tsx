@@ -16,9 +16,28 @@ Time: 02:17
 🟢 🟢 🟢 🟢  ✓
 
 Think you can beat this?
-Play now: @MastermindBot`;
+Play now: @play_mastermind_bot`;
 
-const handleShare = () => {
+const handleShare = async () => {
+  // Try Web Share API first (native device share sheet)
+  if (navigator.share && navigator.canShare) {
+    try {
+      const shareData = {
+        title: "🎯 Mastermind Game Result",
+        text: mastermindText,
+        url: "https://t.me/play_mastermind_bot", // Your bot URL
+      };
+
+      if (navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+        return;
+      }
+    } catch (error) {
+      console.log("Web Share API failed, falling back to Telegram sharing");
+    }
+  }
+
+  // Fallback to Telegram sharing
   const shareUrl = `tg://msg_url?url=${encodeURIComponent(mastermindText)}`;
   openLink(shareUrl);
 };
