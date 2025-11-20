@@ -40,7 +40,7 @@ export const IndexPage: FC = () => {
                 mode="filled"
                 size="s"
                 onClick={handleShare}
-                className="plausible-event-name=Button+Click"
+                className="plausible-event-name=Share"
               >
                 Share
               </Button>
