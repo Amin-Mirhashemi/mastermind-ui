@@ -47,8 +47,10 @@ export const GameBoard: React.FC<GameBoardProps> = ({
             😎 Mastermind
           </Title>
           <div className="flex justify-center gap-4">
-            <Text className="opacity-75">⏱️ {formatTime(elapsedTime)}</Text>
-            <Text className="opacity-75">
+            <Text className="text-gray-700 dark:text-gray-300">
+              ⏱️ {formatTime(elapsedTime)}
+            </Text>
+            <Text className="text-gray-700 dark:text-gray-300">
               🎲 {remainingGuesses} guesses left
             </Text>
           </div>
@@ -73,13 +75,13 @@ export const GameBoard: React.FC<GameBoardProps> = ({
         {/* Previous Guesses */}
         <div className="space-y-2 mb-6">
           {gameState.guesses.map((guess, index) => (
-            <GuessRow key={index} guess={guess} />
+            <GuessRow key={index} guess={guess} gameMode={gameState.gameMode} />
           ))}
         </div>
       </div>
 
       {/* Sticky Bottom Section - Current Guess + Color Picker */}
-      <div className="sticky bottom-0 bg-gradient-to-t from-white/98 via-white/95 to-white/90 dark:from-gray-900/98 dark:via-gray-900/95 dark:to-gray-900/90 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50 shadow-2xl shadow-black/10">
+      <div className="sticky bottom-0 bg-gradient-to-t from-white/98 via-white/95 to-white/90 dark:from-gray-800/98 dark:via-gray-800/95 dark:to-gray-800/90 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-600/50 shadow-2xl shadow-black/10">
         {/* Current Guess */}
         <div className="border-b border-gray-200/30 dark:border-gray-700/30 p-4 pb-5">
           <div className="flex justify-center gap-2 mb-4">

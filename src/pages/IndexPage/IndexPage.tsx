@@ -6,7 +6,7 @@ import { Page } from "@/components/Page.tsx";
 import { GameBoard } from "@/components/GameBoard.tsx";
 import { WelcomeOverlay } from "@/components/WelcomeOverlay.tsx";
 import { SuccessOverlay } from "@/components/SuccessOverlay.tsx";
-import { GameState, Guess } from "@/types/game";
+import { GameState, Guess, GameMode } from "@/types/game";
 import {
   generateGameColors,
   calculateHints,
@@ -21,9 +21,10 @@ export const IndexPage: React.FC = () => {
     guesses: [],
     currentGuess: [null, null, null, null, null],
     gameStatus: "welcome",
+    gameMode: "easy" as GameMode,
     startTime: null,
     endTime: null,
-    maxGuesses: 10,
+    maxGuesses: 12,
   });
 
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -43,7 +44,7 @@ export const IndexPage: React.FC = () => {
     };
   }, [gameState.gameStatus, gameState.startTime]);
 
-  const startGame = useCallback(() => {
+  const startGame = useCallback((mode: GameMode = "easy") => {
     const { secretCode, availableColors } = generateGameColors();
     setGameState({
       secretCode,
@@ -51,6 +52,7 @@ export const IndexPage: React.FC = () => {
       guesses: [],
       currentGuess: [null, null, null, null, null],
       gameStatus: "playing",
+      gameMode: mode,
       startTime: Date.now(),
       endTime: null,
       maxGuesses: 12,
@@ -63,7 +65,8 @@ export const IndexPage: React.FC = () => {
 
     const hints = calculateHints(
       gameState.currentGuess as any,
-      gameState.secretCode
+      gameState.secretCode,
+      gameState.gameMode
     );
     const newGuess: Guess = {
       colors: [...gameState.currentGuess],
@@ -106,7 +109,8 @@ export const IndexPage: React.FC = () => {
     const shareText = generateShareText(
       gameState.guesses.length,
       elapsedTime,
-      gameState.secretCode
+      gameState.secretCode,
+      gameState.gameMode
     );
 
     const shareUrl = `https://t.me/share/url?text=${encodeURIComponent(
@@ -122,6 +126,7 @@ export const IndexPage: React.FC = () => {
       guesses: [],
       currentGuess: [null, null, null, null, null],
       gameStatus: "welcome",
+      gameMode: "easy",
       startTime: null,
       endTime: null,
       maxGuesses: 12,
@@ -150,6 +155,7 @@ export const IndexPage: React.FC = () => {
           <SuccessOverlay
             guesses={gameState.guesses.length}
             time={elapsedTime}
+            gameMode={gameState.gameMode}
             onShare={handleShare}
             onPlayAgain={resetGame}
           />

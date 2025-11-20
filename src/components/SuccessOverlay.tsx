@@ -5,6 +5,7 @@ import { formatTime } from "@/utils/gameLogic";
 interface SuccessOverlayProps {
   guesses: number;
   time: number;
+  gameMode: "easy" | "hard";
   onShare: () => void;
   onPlayAgain: () => void;
 }
@@ -12,14 +13,23 @@ interface SuccessOverlayProps {
 export const SuccessOverlay: React.FC<SuccessOverlayProps> = ({
   guesses,
   time,
+  gameMode,
   onShare,
   onPlayAgain,
 }) => {
   const getPerformanceMessage = () => {
-    if (guesses <= 5 && time <= 120) return "🚀 Mastermind Champion!";
-    if (guesses <= 8 && time <= 300) return "🎯 Code Breaker!";
-    if (guesses <= 10) return "🧠 Puzzle Solver!";
-    return "🎨 Color Expert!";
+    let baseMessage = "";
+    if (guesses <= 5 && time <= 120) baseMessage = "🚀 Mastermind Champion!";
+    else if (guesses <= 8 && time <= 300) baseMessage = "🎯 Code Breaker!";
+    else if (guesses <= 10) baseMessage = "🧠 Puzzle Solver!";
+    else baseMessage = "🎨 Color Expert!";
+
+    // Add hard mode badge for special recognition
+    if (gameMode === "hard" && (guesses <= 8 || time <= 300)) {
+      return `${baseMessage} 🔒`;
+    }
+
+    return baseMessage;
   };
 
   const getStatsEmoji = () => {

@@ -21,12 +21,15 @@ export interface Guess {
   timestamp: number;
 }
 
+export type GameMode = "easy" | "hard";
+
 export interface GameState {
   secretCode: Color[];
   availableColors: Color[];
   guesses: Guess[];
   currentGuess: (Color | null)[];
   gameStatus: "welcome" | "playing" | "won" | "lost";
+  gameMode: GameMode;
   startTime: number | null;
   endTime: number | null;
   maxGuesses: number;

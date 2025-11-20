@@ -23,7 +23,8 @@ export function generateGameColors(): {
 // Calculate hints for a guess
 export function calculateHints(
   guess: Color[],
-  secretCode: Color[]
+  secretCode: Color[],
+  gameMode: "easy" | "hard" = "hard"
 ): ("black" | "white" | null)[] {
   const hints: ("black" | "white" | null)[] = [null, null, null, null, null];
   const secretCopy = [...secretCode];
@@ -49,12 +50,18 @@ export function calculateHints(
     }
   }
 
-  // Sort hints so position doesn't reveal which peg is for which color
-  return hints.sort((a, b) => {
-    if (a === "black" && b !== "black") return -1;
-    if (a !== "black" && b === "black") return 1;
-    return 0;
-  });
+  // In easy mode, hints stay in their positions to help identify which colors are correct
+  // In hard mode, hints are randomized so players can't tell which hint belongs to which color
+  if (gameMode === "hard") {
+    return hints.sort((a, b) => {
+      if (a === "black" && b !== "black") return -1;
+      if (a !== "black" && b === "black") return 1;
+      return 0;
+    });
+  }
+
+  // In easy mode, return hints in their original positions
+  return hints;
 }
 
 // Check if the guess is correct
@@ -75,7 +82,8 @@ export function formatTime(seconds: number): string {
 export function generateShareText(
   guesses: number,
   timeInSeconds: number,
-  secretCode: Color[]
+  secretCode: Color[],
+  gameMode: "easy" | "hard" = "hard"
 ): string {
   const timeFormatted = formatTime(timeInSeconds);
 
@@ -103,25 +111,26 @@ export function generateShareText(
   let achievementTitle = "";
   let achievementEmoji = "";
   let challengeText = "";
+  let modeBadge = gameMode === "hard" ? " 🔒 HARD MODE" : "";
 
   if (guesses <= 4 && timeInSeconds <= 90) {
-    achievementTitle = "🎯 MASTERMIND GRANDMASTER!";
+    achievementTitle = `🎯 MASTERMIND GRANDMASTER!${modeBadge}`;
     achievementEmoji = "👑";
     challengeText = "Can you match this perfection?";
   } else if (guesses <= 6 && timeInSeconds <= 180) {
-    achievementTitle = "🚀 CODE CRACKING CHAMPION!";
+    achievementTitle = `🚀 CODE CRACKING CHAMPION!${modeBadge}`;
     achievementEmoji = "⚡";
     challengeText = "Think you can beat my speed?";
   } else if (guesses <= 8 && timeInSeconds <= 300) {
-    achievementTitle = "🎯 PUZZLE MASTER!";
+    achievementTitle = `🎯 PUZZLE MASTER!${modeBadge}`;
     achievementEmoji = "🧠";
     challengeText = "Your turn to crack the code!";
   } else if (guesses <= 10) {
-    achievementTitle = "🎨 COLOR DETECTIVE!";
+    achievementTitle = `🎨 COLOR DETECTIVE!${modeBadge}`;
     achievementEmoji = "🔍";
     challengeText = "Show me your detective skills!";
   } else {
-    achievementTitle = "🎯 CODE BREAKER!";
+    achievementTitle = `🎯 CODE BREAKER!${modeBadge}`;
     achievementEmoji = "💪";
     challengeText = "Persistence pays off!";
   }
