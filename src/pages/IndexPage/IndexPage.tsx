@@ -36,7 +36,12 @@ export const IndexPage: FC = () => {
           <Cell
             subtitle="Share this game result in any chat"
             after={
-              <Button mode="filled" size="s" onClick={handleShare}>
+              <Button
+                mode="filled"
+                size="s"
+                onClick={handleShare}
+                className="plausible-event-name=Button+Click"
+              >
                 Share
               </Button>
             }
