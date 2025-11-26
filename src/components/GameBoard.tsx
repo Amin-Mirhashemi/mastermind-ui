@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Title, Text } from "@telegram-apps/telegram-ui";
 import { GameState } from "@/types/game";
 import { formatTime } from "@/utils/gameLogic";
@@ -10,6 +11,7 @@ interface GameBoardProps {
   elapsedTime: number;
   onGuessUpdate: (index: number, color: any) => void;
   onMakeGuess: () => void;
+  isPractice?: boolean;
 }
 
 export const GameBoard: React.FC<GameBoardProps> = ({
@@ -17,7 +19,9 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   elapsedTime,
   onGuessUpdate,
   onMakeGuess,
+  isPractice = false,
 }) => {
+  const navigate = useNavigate();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when guesses change
@@ -42,7 +46,17 @@ export const GameBoard: React.FC<GameBoardProps> = ({
         className="flex-1 overflow-y-auto p-4 pb-6 scroll-smooth"
       >
         {/* Header */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-6 relative">
+          {isPractice && (
+            <Button
+              mode="outline"
+              size="s"
+              onClick={() => navigate("/")}
+              className="absolute left-0 top-0 border-gray-400 text-gray-600 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-800"
+            >
+              ← Back
+            </Button>
+          )}
           <Title level="1" className="mb-2">
             😎 Mastermind
           </Title>

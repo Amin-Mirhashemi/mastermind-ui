@@ -43,13 +43,13 @@ export const ALL_COLORS: Color[] = [
   "purple",
   "orange",
   "pink",
-  "cyan",
-  "lime",
-  "teal",
-  "indigo",
-  "violet",
+  // "cyan",
+  // "lime",
+  // "teal",
+  // "indigo",
+  // "violet",
   "maroon",
-  "navy",
+  // "navy",
 ];
 
 export const COLOR_MAP = {

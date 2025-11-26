@@ -91,7 +91,7 @@ export const GuessRow: React.FC<GuessRowProps> = ({ guess, gameMode }) => {
         {Array.from({ length: whitePegs }, (_, i) => (
           <div
             key={`white-${i}`}
-            className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-300 border-2 border-gray-600 dark:border-gray-400 flex items-center justify-center"
+            className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-300 border border-gray-600 dark:border-black dark:border-gray-400 flex items-center justify-center"
             title="Correct color, wrong position"
           ></div>
         ))}
