@@ -262,7 +262,7 @@ export const LeaderboardPage: React.FC = () => {
           </div>
 
           {/* Table Header */}
-          <div className="flex items-center px-4 py-3 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center px-4 py-3 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center gap-3 flex-1">
               <div className="w-8"></div>
               <div className="w-10"></div>
