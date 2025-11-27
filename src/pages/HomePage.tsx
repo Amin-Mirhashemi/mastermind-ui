@@ -21,13 +21,14 @@ export const HomePage: React.FC = () => {
   const userData = useSignal(initData.user);
 
   useEffect(() => {
-    if (userData) {
-      loadProfile(userData);
+    if (userData?.id) {
+      loadProfile();
     }
   }, [userData]);
 
-  const loadProfile = async (userData: any) => {
+  const loadProfile = async () => {
     try {
+      if (!userData) return;
       // Store telegram ID for game completion tracking
       localStorage.setItem("telegramId", userData.id.toString());
 
