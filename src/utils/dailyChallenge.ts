@@ -63,7 +63,7 @@ function hashString(str: string): number {
  */
 export function getTodayString(): string {
   const [month, day, year] = new Date().toLocaleDateString("en-US").split("/");
-  return `${year}-${month}-${day}`;
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
 }
 
 /**
