@@ -66,8 +66,17 @@ export const HomePage: React.FC = () => {
       game.completedat?.startsWith(today)
     );
 
-    if (!todayGame) return "not_played";
-    return todayGame.iswon ? "won" : "lost";
+    if (todayGame) {
+      return todayGame.iswon ? "won" : "lost";
+    }
+
+    // Check if user started today's daily challenge but didn't complete it
+    const startedChallengeDate = localStorage.getItem("dailyChallengeDate");
+    if (startedChallengeDate === today) {
+      return "lost"; // They started but didn't finish/complete it
+    }
+
+    return "not_played";
   };
 
   const handleChallengeClick = () => {
@@ -92,6 +101,10 @@ export const HomePage: React.FC = () => {
   };
 
   const startDailyChallenge = () => {
+    // Store today's date in localStorage to prevent cheating
+    const today = getTodayString();
+    localStorage.setItem("dailyChallengeDate", today);
+
     const url = getDailyChallengeUrl();
     navigate(url);
   };

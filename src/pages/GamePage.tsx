@@ -147,6 +147,9 @@ export const GamePage: React.FC = () => {
         // Fire-and-forget: call API in background without affecting UI
         GameService.recordGameCompletion(gameData);
       }
+
+      // Clear the daily challenge date from localStorage since game is completed
+      localStorage.removeItem("dailyChallengeDate");
     }
   }, [
     gameState.gameStatus,
