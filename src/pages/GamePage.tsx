@@ -31,7 +31,7 @@ export const GamePage: React.FC = () => {
     gameMode: "easy",
     startTime: null,
     endTime: null,
-    maxGuesses: 12,
+    maxGuesses: 20,
   });
 
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -53,7 +53,7 @@ export const GamePage: React.FC = () => {
           gameMode: "hard", // Daily challenges are hard mode
           startTime: Date.now(),
           endTime: null,
-          maxGuesses: 12,
+          maxGuesses: 20,
         });
       }
     } else if (isPractice && (mode === "easy" || mode === "hard")) {
@@ -68,7 +68,7 @@ export const GamePage: React.FC = () => {
         gameMode,
         startTime: Date.now(),
         endTime: null,
-        maxGuesses: 12,
+        maxGuesses: 20,
       });
     } else {
       // Invalid URL, redirect to home
@@ -181,7 +181,7 @@ Can you beat my time and extend your streak? 🔥
 ⏱️ My time: ${Math.floor(elapsedTime / 60)}:${(elapsedTime % 60)
         .toString()
         .padStart(2, "0")}
-🎲 My attempts: ${gameState.guesses.length}/12
+🎲 My attempts: ${gameState.guesses.length}/20
 
 Think you can solve today's mystery code? 🤔
 

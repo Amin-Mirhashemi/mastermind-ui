@@ -148,7 +148,7 @@ export const HomePage: React.FC = () => {
             Mastermind
           </Title>
           <Text className="opacity-75">
-            Crack the secret color code! You have 12 attempts to guess the
+            Crack the secret color code! You have 20 attempts to guess the
             5-color combination.
           </Text>
         </div>

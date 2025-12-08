@@ -24,7 +24,7 @@ export const IndexPage: React.FC = () => {
     gameMode: "easy" as GameMode,
     startTime: null,
     endTime: null,
-    maxGuesses: 12,
+    maxGuesses: 20,
   });
 
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -55,7 +55,7 @@ export const IndexPage: React.FC = () => {
       gameMode: mode,
       startTime: Date.now(),
       endTime: null,
-      maxGuesses: 12,
+      maxGuesses: 20,
     });
     setElapsedTime(0);
   }, []);
@@ -129,7 +129,7 @@ export const IndexPage: React.FC = () => {
       gameMode: "easy",
       startTime: null,
       endTime: null,
-      maxGuesses: 12,
+      maxGuesses: 20,
     });
     setElapsedTime(0);
   }, []);

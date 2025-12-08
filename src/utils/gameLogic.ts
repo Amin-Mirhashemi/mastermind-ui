@@ -146,7 +146,7 @@ ${codeEmojis}
 ━━━━━━━━━━━━━━━━━━━━━━
 
 ⏱️ Time: ${timeFormatted}
-🎲 Attempts: ${guesses}/12
+🎲 Attempts: ${guesses}/20
 
 💡 I cracked the color code with just ${guesses} ${
     guesses === 1 ? "try" : "tries"
