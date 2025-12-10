@@ -2,8 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 // API Configuration
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  "https://mastermind-backend-production.up.railway.app";
+  import.meta.env.VITE_API_URL || "https://mastermind.liara.run";
 
 class ApiClient {
   private client: AxiosInstance;
