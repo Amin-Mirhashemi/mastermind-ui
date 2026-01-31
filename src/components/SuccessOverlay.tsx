@@ -33,7 +33,7 @@ export const SuccessOverlay: React.FC<SuccessOverlayProps> = ({
   };
 
   const getStatsEmoji = () => {
-    if (guesses <= 5) return "⭐⭐⭐⭐⭐";
+    if (guesses <= 6) return "⭐⭐⭐⭐⭐";
     if (guesses <= 8) return "⭐⭐⭐⭐";
     if (guesses <= 10) return "⭐⭐⭐";
     return "⭐⭐";
