@@ -1,12 +1,11 @@
-// API Services and Types
-export * from "./types";
-export * from "./client";
-export * from "./profileService";
-export * from "./gameService";
-export * from "./leaderboardService";
+// Supabase Client
+export { supabase } from "./supabase";
+export type { DbUser, DbGame, DbStreak } from "./supabase";
 
-// Re-export commonly used types and services
+// API Types
+export * from "./types";
+
+// Services
 export { ProfileService } from "./profileService";
 export { GameService } from "./gameService";
 export { LeaderboardService } from "./leaderboardService";
-export { apiClient } from "./client";

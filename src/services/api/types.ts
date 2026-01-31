@@ -11,8 +11,8 @@ export interface ProfileRequest {
 export interface UserProfile {
   id: string;
   telegramid: string;
-  username?: string;
-  firstname?: string;
+  username?: string | null;
+  firstname?: string | null;
   lastname?: string | null;
   avatarurl?: string | null;
   language: string;
@@ -26,15 +26,15 @@ export interface GameRecord {
   iscompleted: boolean;
   iswon: boolean;
   score?: number | null;
-  timetaken: number;
-  code: string;
+  timetaken?: number | null;
+  code?: string | null;
   completedat: string;
 }
 
 export interface StreaksData {
   currentStreak: number;
   bestStreak: number;
-  lastGameDate: string;
+  lastGameDate: string | null;
 }
 
 export interface ProfileResponse {
@@ -44,15 +44,26 @@ export interface ProfileResponse {
   date: string;
 }
 
+// Game Completion Types
+export interface GameCompletionRequest {
+  telegramId: string;
+  attempts: number;
+  isWon: boolean;
+  timeTaken: number;
+  completedAt: string;
+}
+
+// Leaderboard Types
 export interface LeaderboardEntry {
   rank: number;
   attempts: number;
-  timeTaken: number;
+  timetaken: number;
   user: {
     id: string;
-    firstName: string;
-    lastName?: string | null;
-    avatarUrl?: string | null;
+    telegramid: string;
+    firstname: string | null;
+    lastname?: string | null;
+    avatarurl?: string | null;
   };
 }
 
@@ -61,13 +72,6 @@ export interface LeaderboardResponse {
   userRank?: {
     rank: number;
     attempts: number;
-    timeTaken: number;
+    timetaken: number;
   };
-}
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
-  message?: string;
 }

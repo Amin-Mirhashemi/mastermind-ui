@@ -97,7 +97,7 @@ export const GamePage: React.FC = () => {
     const hints = calculateHints(
       gameState.currentGuess as any,
       gameState.secretCode,
-      gameState.gameMode
+      gameState.gameMode,
     );
     const newGuess: Guess = {
       colors: [...gameState.currentGuess],
@@ -108,7 +108,7 @@ export const GamePage: React.FC = () => {
     const newGuesses = [...gameState.guesses, newGuess];
     const isCorrect = isCorrectGuess(
       gameState.currentGuess as any,
-      gameState.secretCode
+      gameState.secretCode,
     );
 
     if (isCorrect || newGuesses.length >= gameState.maxGuesses) {
@@ -140,7 +140,7 @@ export const GamePage: React.FC = () => {
           attempts: gameState.guesses.length,
           isWon: gameState.gameStatus === "won",
           timeTaken: Math.floor(
-            (gameState.endTime! - gameState.startTime!) / 1000
+            (gameState.endTime! - gameState.startTime!) / 1000,
           ),
           completedAt: getTodayString(),
         };
@@ -193,12 +193,12 @@ Think you can solve today's mystery code? 🤔
       shareText = generateShareText(
         gameState.guesses.length,
         elapsedTime,
-        gameState.secretCode
+        gameState.secretCode,
       );
     }
 
     const shareUrl = `https://t.me/share/url?text=${encodeURIComponent(
-      shareText
+      shareText,
     )}`;
     openTelegramLink(shareUrl);
   }, [gameState, elapsedTime, isDaily]);
@@ -339,17 +339,8 @@ Think you can solve today's mystery code? 🤔
               {isDaily ? (
                 <div className="mb-4">
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                    Try again tomorrow for a new challenge!
+                    Don't worry, come back tomorrow for a new challenge!
                   </p>
-                  <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-3 border border-orange-200 dark:border-orange-800 flex flex-col gap-2">
-                    <Text className="font-medium text-orange-800 dark:text-orange-200 mb-1">
-                      💔 Protect Your Streak!
-                    </Text>
-                    <Text className="text-sm text-orange-700 dark:text-orange-300">
-                      Invite a friend to join Mastermind and your streak will
-                      continue. Get your invite link from the bot!
-                    </Text>
-                  </div>
                 </div>
               ) : null}
               <div className="flex gap-2">

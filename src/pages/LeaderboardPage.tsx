@@ -12,7 +12,7 @@ export const LeaderboardPage: React.FC = () => {
   const [userRank, setUserRank] = useState<{
     rank: number;
     attempts: number;
-    timeTaken: number;
+    timetaken: number;
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,12 +32,16 @@ export const LeaderboardPage: React.FC = () => {
     try {
       setLoading(true);
       const today = getTodayString();
-      const response = await LeaderboardService.getLeaderboard(today);
+      const telegramId = localStorage.getItem("telegramId") || undefined;
+      const response = await LeaderboardService.getLeaderboard(
+        today,
+        telegramId,
+      );
       setLeaderboard(response.leaderboard);
       setUserRank(response.userRank || null);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to load leaderboard"
+        err instanceof Error ? err.message : "Failed to load leaderboard",
       );
     } finally {
       setLoading(false);
@@ -62,7 +66,7 @@ export const LeaderboardPage: React.FC = () => {
     const rows: JSX.Element[] = [];
 
     leaderboard.forEach((entry, index) => {
-      const isCurrentUser = entry.user.id === currentUserId;
+      const isCurrentUser = entry.user.telegramid === currentUserId;
       const isEven = index % 2 === 0;
 
       rows.push(
@@ -72,8 +76,8 @@ export const LeaderboardPage: React.FC = () => {
             isCurrentUser
               ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700"
               : isEven
-              ? "bg-gray-50 dark:bg-gray-800"
-              : "bg-white dark:bg-gray-900"
+                ? "bg-gray-50 dark:bg-gray-800"
+                : "bg-white dark:bg-gray-900"
           }`}
         >
           <div className="flex items-center gap-3 flex-1">
@@ -90,11 +94,11 @@ export const LeaderboardPage: React.FC = () => {
 
             {/* Avatar */}
             <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-              {entry.user.avatarUrl ? (
+              {entry.user.avatarurl ? (
                 <img
-                  src={entry.user.avatarUrl}
-                  alt={`${entry.user.firstName} ${
-                    entry.user.lastName || ""
+                  src={entry.user.avatarurl}
+                  alt={`${entry.user.firstname} ${
+                    entry.user.lastname || ""
                   }`.trim()}
                   className="w-full h-full object-cover"
                 />
@@ -110,7 +114,8 @@ export const LeaderboardPage: React.FC = () => {
                   isCurrentUser ? "text-blue-600 dark:text-blue-400" : ""
                 }`}
               >
-                {`${entry.user.firstName} ${entry.user.lastName || ""}`.trim()}
+                {`${entry.user.firstname || ""} ${entry.user.lastname || ""}`.trim() ||
+                  "Anonymous"}
               </Text>
             </div>
           </div>
@@ -136,11 +141,11 @@ export const LeaderboardPage: React.FC = () => {
                     : "text-gray-600 dark:text-gray-400"
                 }`}
               >
-                {formatTime(entry.timeTaken)}
+                {formatTime(entry.timetaken)}
               </Text>
             </div>
           </div>
-        </div>
+        </div>,
       );
     });
 
@@ -149,7 +154,7 @@ export const LeaderboardPage: React.FC = () => {
       rows.push(
         <div key="separator" className="flex justify-center py-4">
           <Text className="text-gray-500 dark:text-gray-400">...</Text>
-        </div>
+        </div>,
       );
 
       rows.push(
@@ -187,11 +192,11 @@ export const LeaderboardPage: React.FC = () => {
             </div>
             <div className="text-center">
               <Text className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                {formatTime(userRank.timeTaken)}
+                {formatTime(userRank.timetaken)}
               </Text>
             </div>
           </div>
-        </div>
+        </div>,
       );
     }
 

@@ -16,7 +16,6 @@ export const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showChallengeModal, setShowChallengeModal] = useState(false);
-  const [showInviteModal, setShowInviteModal] = useState(false);
 
   const userData = useSignal(initData.user);
 
@@ -63,7 +62,7 @@ export const HomePage: React.FC = () => {
 
     const today = getTodayString();
     const todayGame = profile.games.find((game: any) =>
-      game.completedat?.startsWith(today)
+      game.completedat?.startsWith(today),
     );
 
     if (todayGame) {
@@ -83,13 +82,8 @@ export const HomePage: React.FC = () => {
     const status = getTodayGameStatus();
     const streak = getStreakDisplay();
 
-    if (status === "lost") {
-      setShowInviteModal(true);
-      return;
-    }
-
-    if (status === "won") {
-      return; // Already won, button should be hidden
+    if (status === "lost" || status === "won") {
+      return; // Can't play again
     }
 
     // Show challenge modal for first 3 days of streak
@@ -235,13 +229,9 @@ export const HomePage: React.FC = () => {
               <Text className="font-semibold text-red-700 dark:text-red-300">
                 💔 Challenge Failed Today
               </Text>
-              <Button
-                mode="outline"
-                onClick={handleChallengeClick}
-                className="border-red-500 text-red-600 hover:bg-red-50 mt-3"
-              >
-                Invite Friend to Continue Streak
-              </Button>
+              <Text className="text-sm opacity-75 mt-2">
+                Come back tomorrow for a new challenge!
+              </Text>
             </div>
           )}
         </div>
@@ -350,37 +340,6 @@ export const HomePage: React.FC = () => {
                 className="flex-1 bg-gradient-to-r from-green-500 to-blue-600"
               >
                 Start Challenge
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Invite Modal */}
-      {showInviteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full">
-            <Title level="2" className="mb-4 text-center">
-              💔 Streak Protection
-            </Title>
-            <div className="mb-6 space-y-3">
-              <p>
-                You can't play today's challenge again, but you can protect your
-                streak!
-              </p>
-              <p>
-                Invite one friend to join Mastermind today, and your streak will
-                continue.
-              </p>
-              <p>Get your invite link from the bot: @play_mastermind_bot</p>
-            </div>
-            <div className="flex gap-3">
-              <Button
-                mode="outline"
-                onClick={() => setShowInviteModal(false)}
-                className="flex-1"
-              >
-                Close
               </Button>
             </div>
           </div>
